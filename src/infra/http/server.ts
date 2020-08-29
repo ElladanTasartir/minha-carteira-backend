@@ -1,8 +1,10 @@
-import express from "express";
+import express, { json } from "express";
 
 import routes from './routes/index';
 
 const server = express();
+
+server.use(json());
 
 server.use(routes);
 
