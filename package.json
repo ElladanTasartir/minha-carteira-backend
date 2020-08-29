@@ -1,10 +1,10 @@
 {
   "name": "minha-carteira-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/index.ts"
+    "dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/infra/http/server.ts"
   },
   "dependencies": {
     "express": "^4.17.1"
