@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express, { json } from 'express';
 
 import routes from './routes/index';
 
@@ -9,5 +9,6 @@ server.use(json());
 server.use(routes);
 
 server.listen(3333, () => {
-  console.log("Deu");
+  // eslint-disable-next-line
+  console.log('Server hosted on 3333 port');
 });
