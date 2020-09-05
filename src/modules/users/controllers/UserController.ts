@@ -15,19 +15,15 @@ class UserController {
 
     const signUp = new SignUpService();
 
-    try {
-      const userResponse = await signUp.execute({
-        name,
-        email,
-        password,
-      });
+    const userResponse = await signUp.execute({
+      name,
+      email,
+      password,
+    });
 
-      delete userResponse.password;
+    delete userResponse.password;
 
-      return response.json(userResponse);
-    } catch (err) {
-      return response.status(400).json({ error: err.message });
-    }
+    return response.status(201).json(userResponse);
   }
 }
 
