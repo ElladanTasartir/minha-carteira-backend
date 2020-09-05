@@ -2,6 +2,7 @@ import { getMongoRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import User from '../../../infra/entities/User';
+import AppError from '../../../shared/errors/AppError';
 
 interface Request {
   name: string;
@@ -21,7 +22,7 @@ class SignUpService {
 
     const passwordHash = await hash(password, 8);
 
-    if (emailExists) throw Error('E-mail já cadastrado');
+    if (emailExists) throw new AppError('E-mail já cadastrado', 400);
 
     const user = usersRepository.create({
       name,
