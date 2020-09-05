@@ -1,4 +1,5 @@
 import { getMongoRepository } from 'typeorm';
+import { hash } from 'bcryptjs';
 
 import User from '../../../infra/entities/User';
 
@@ -18,9 +19,15 @@ class SignUpService {
       },
     });
 
+    const passwordHash = await hash(password, 8);
+
     if (emailExists) throw Error('E-mail já cadastrado');
 
-    const user = usersRepository.create({ name, email, password });
+    const user = usersRepository.create({
+      name,
+      email,
+      password: passwordHash,
+    });
 
     const userCreated = await usersRepository.save(user);
 
