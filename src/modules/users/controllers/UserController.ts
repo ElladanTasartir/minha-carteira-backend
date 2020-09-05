@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
+
 import SignUpService from '../services/SignUpService';
+import AppError from '../../../shared/errors/AppError';
 
 class UserController {
   async create(request: Request, response: Response) {
     const { name, email, password, password_confirm } = request.body;
 
-    if (!name) return response.json({ message: 'name is required' });
-    if (!email) return response.json({ message: 'email is required' });
-    if (!password) return response.json({ message: 'password is required' });
+    if (!name) throw new AppError('name is required', 400);
+    if (!email) throw new AppError('email is required', 400);
+    if (!password) throw new AppError('password is required', 400);
     if (!password_confirm)
-      return response.json({ message: 'password_confirm is required' });
+      throw new AppError('password_confirm is required', 400);
     if (password !== password_confirm)
-      return response.json({ message: "passwords don't match" });
+      throw new AppError("passwords don't match", 400);
 
     const signUp = new SignUpService();
 
