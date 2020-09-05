@@ -1,0 +1,11 @@
+{
+  "type": "mongodb",
+  "host": "localhost",
+  "port": 27017,
+  "database": "minha_carteira",
+  "useUnifiedTopology": true,
+  "useNewUrlParser": true,
+  "entities": [
+    "./src/infra/entities/*.ts"
+  ]
+}
