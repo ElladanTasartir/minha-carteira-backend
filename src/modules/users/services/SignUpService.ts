@@ -1,8 +1,8 @@
-import { getMongoRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import User from '../../../infra/entities/User';
 import AppError from '../../../shared/errors/AppError';
+import { Query } from './UserRepositoryFake';
 
 interface Request {
   name: string;
@@ -10,11 +10,21 @@ interface Request {
   password: string;
 }
 
-class SignUpService {
-  async execute({ name, email, password }: Request): Promise<User> {
-    const usersRepository = getMongoRepository(User);
+interface UserRepositoryData {
+  create: (data: Omit<User, 'id'>) => User;
+  findOne: (data: Query) => Promise<string | null>;
+  save: (user: User) => Promise<User>;
+}
 
-    const emailExists = await usersRepository.findOne({
+class SignUpService {
+  private usersRepository: UserRepositoryData;
+
+  constructor(usersRepository: UserRepositoryData) {
+    this.usersRepository = usersRepository;
+  }
+
+  async execute({ name, email, password }: Request): Promise<User> {
+    const emailExists = await this.usersRepository.findOne({
       where: {
         email,
       },
@@ -24,13 +34,13 @@ class SignUpService {
 
     if (emailExists) throw new AppError('E-mail já cadastrado', 400);
 
-    const user = usersRepository.create({
+    const user = this.usersRepository.create({
       name,
       email,
       password: passwordHash,
     });
 
-    const userCreated = await usersRepository.save(user);
+    const userCreated = await this.usersRepository.save(user);
 
     return userCreated;
   }
