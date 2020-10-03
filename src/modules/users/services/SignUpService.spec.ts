@@ -1,5 +1,6 @@
 import SignUpService from './SignUpService';
-import UsersRepositoryFake from '../repositories/fakes/FakeUserRepository';
+import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
 describe('SignUpService', () => {
   it('should be able to create a new user', async () => {
@@ -9,8 +10,9 @@ describe('SignUpService', () => {
       password: 'any_password',
     };
 
-    const userRepository = new UsersRepositoryFake();
-    const signUp = new SignUpService(userRepository);
+    const userRepository = new FakeUserRepository();
+    const fakeHashProvider = new FakeHashProvider();
+    const signUp = new SignUpService(userRepository, fakeHashProvider);
 
     const user = await signUp.execute(data);
 
