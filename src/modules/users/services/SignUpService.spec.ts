@@ -1,5 +1,5 @@
 import SignUpService from './SignUpService';
-import UsersRepositoryFake from './UserRepositoryFake';
+import UsersRepositoryFake from '../repositories/fakes/FakeUserRepository';
 
 describe('SignUpService', () => {
   it('should be able to create a new user', async () => {
@@ -9,7 +9,8 @@ describe('SignUpService', () => {
       password: 'any_password',
     };
 
-    const signUp = new SignUpService(new UsersRepositoryFake());
+    const userRepository = new UsersRepositoryFake();
+    const signUp = new SignUpService(userRepository);
 
     const user = await signUp.execute(data);
 

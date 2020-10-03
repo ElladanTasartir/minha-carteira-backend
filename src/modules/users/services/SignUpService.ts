@@ -1,8 +1,9 @@
+import { inject, injectable } from 'tsyringe';
 import { hash } from 'bcryptjs';
 
-import User from '../../../infra/entities/User';
+import User from '../infra/typeorm/entities/User';
 import AppError from '../../../shared/errors/AppError';
-import { Query } from './UserRepositoryFake';
+import IUserRepository from '../repositories/IUserRepository';
 
 interface Request {
   name: string;
@@ -10,25 +11,15 @@ interface Request {
   password: string;
 }
 
-interface UserRepositoryData {
-  create: (data: Omit<User, 'id'>) => User;
-  findOne: (data: Query) => Promise<string | null>;
-  save: (user: User) => Promise<User>;
-}
-
+@injectable()
 class SignUpService {
-  private usersRepository: UserRepositoryData;
-
-  constructor(usersRepository: UserRepositoryData) {
-    this.usersRepository = usersRepository;
-  }
+  constructor(
+    @inject('UserRepository')
+    private usersRepository: IUserRepository,
+  ) {}
 
   async execute({ name, email, password }: Request): Promise<User> {
-    const emailExists = await this.usersRepository.findOne({
-      where: {
-        email,
-      },
-    });
+    const emailExists = await this.usersRepository.findByEmail(email);
 
     const passwordHash = await hash(password, 8);
 
@@ -40,9 +31,7 @@ class SignUpService {
       password: passwordHash,
     });
 
-    const userCreated = await this.usersRepository.save(user);
-
-    return userCreated;
+    return user;
   }
 }
 

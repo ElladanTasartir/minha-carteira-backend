@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
-import SignUpService from '../services/SignUpService';
-import AppError from '../../../shared/errors/AppError';
+import SignUpService from '@modules/users/services/SignUpService';
+import AppError from '@shared/errors/AppError';
 
 class UserController {
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password, password_confirm } = request.body;
 
     if (!name) throw new AppError('name is required', 400);
@@ -15,7 +16,7 @@ class UserController {
     if (password !== password_confirm)
       throw new AppError("passwords don't match", 400);
 
-    const signUp = new SignUpService();
+    const signUp = container.resolve(SignUpService);
 
     const userResponse = await signUp.execute({
       name,
@@ -29,4 +30,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default UserController;
