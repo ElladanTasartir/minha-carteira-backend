@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-import { hash } from 'bcryptjs';
 
+import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
-import AppError from '../../../shared/errors/AppError';
 import IUserRepository from '../repositories/IUserRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface Request {
   name: string;
@@ -16,12 +16,14 @@ class SignUpService {
   constructor(
     @inject('UserRepository')
     private usersRepository: IUserRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ name, email, password }: Request): Promise<User> {
     const emailExists = await this.usersRepository.findByEmail(email);
 
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await this.hashProvider.hash(password);
 
     if (emailExists) throw new AppError('E-mail já cadastrado', 400);
 
