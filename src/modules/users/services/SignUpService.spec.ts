@@ -16,6 +16,7 @@ describe('SignUpService', () => {
 
     const user = await signUp.execute(data);
 
-    expect(user).toHaveProperty('id');
+    expect(user.name).toBe('any_user');
+    expect(user.email).toBe('any@email.com');
   });
 });
