@@ -12,9 +12,9 @@ export default class FakeUserRepository implements IUserRepository {
     name,
     password,
   }: ICreateUserDTO): Promise<User> {
-    const user = new User(name, email, password);
+    const user = new User();
 
-    Object.assign(user, { id: uuid() });
+    Object.assign(user, { id: uuid(), email, name, password });
 
     this.users.push(user);
 
@@ -28,7 +28,9 @@ export default class FakeUserRepository implements IUserRepository {
   }
 
   public async save(user: User): Promise<User> {
-    this.users.push(user);
+    const findIndex = this.users.findIndex(findUser => findUser.id === user.id);
+
+    this.users[findIndex] = user;
 
     return user;
   }
