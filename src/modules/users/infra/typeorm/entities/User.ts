@@ -1,4 +1,5 @@
 import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export default class User {
@@ -11,12 +12,7 @@ export default class User {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
-
-  constructor(name: string, email: string, password: string) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-  }
 }
