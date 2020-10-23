@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import SignUpService from '@modules/users/services/SignUpService';
 import AppError from '@shared/errors/AppError';
@@ -18,15 +19,13 @@ class UserController {
 
     const signUp = container.resolve(SignUpService);
 
-    const userResponse = await signUp.execute({
+    const user = await signUp.execute({
       name,
       email,
       password,
     });
 
-    delete userResponse.password;
-
-    return response.status(201).json(userResponse);
+    return response.status(201).json(classToClass(user));
   }
 }
 
