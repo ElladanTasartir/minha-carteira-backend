@@ -1,12 +1,11 @@
 import 'reflect-metadata';
-import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
-import authConfig from '@config/auth';
 
 import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import IUserRepository from '../repositories/IUserRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import ITokenProvider from '../providers/TokenProvider/models/ITokenProvider';
 
 interface Request {
   email: string;
@@ -25,6 +24,8 @@ class SignInService {
     private usersRepository: IUserRepository,
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+    @inject('TokenProvider')
+    private tokenProvider: ITokenProvider,
   ) {}
 
   async execute({ email, password }: Request): Promise<Response> {
@@ -43,12 +44,7 @@ class SignInService {
       throw new AppError('Incorrect email/password combination', 401);
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
-
-    const token = sign({}, secret, {
-      expiresIn,
-      subject: String(user.id),
-    });
+    const token = this.tokenProvider.generate(user.id);
 
     return {
       user,
