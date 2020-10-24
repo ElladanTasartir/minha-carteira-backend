@@ -26,5 +26,5 @@ server.use(
 
 server.listen(3333, () => {
   // eslint-disable-next-line
-  console.log('Server hosted on 3333 port');
+  console.log('🚀 Server hosted on 3333 port');
 });
