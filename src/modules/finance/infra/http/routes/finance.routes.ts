@@ -7,6 +7,6 @@ const financeRouter = Router();
 const entryController = new EntryController();
 
 financeRouter.use(ensureAuthenticated);
-financeRouter.post('/entry', entryController.create);
+financeRouter.post('/movement', entryController.create);
 
 export default financeRouter;
