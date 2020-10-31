@@ -1,4 +1,11 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import {
+  Entity,
+  ObjectIdColumn,
+  ObjectID,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('movements')
 class Movement {
@@ -9,7 +16,7 @@ class Movement {
   title: string;
 
   @Column()
-  type: string;
+  type: 'income' | 'outcome';
 
   @Column('date')
   date: Date;
@@ -22,6 +29,12 @@ class Movement {
 
   @Column('description')
   description: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
 
 export default Movement;
