@@ -1,4 +1,11 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import {
+  Entity,
+  ObjectID,
+  ObjectIdColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 @Entity('users')
@@ -15,4 +22,10 @@ export default class User {
   @Exclude()
   @Column()
   password: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
