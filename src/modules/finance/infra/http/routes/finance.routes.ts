@@ -13,10 +13,12 @@ financeRouter.post(
   celebrate({
     [Segments.BODY]: {
       title: Joi.string().required(),
-      type: Joi.string().required(),
+      type: Joi.string()
+        .regex(/income|outcome/)
+        .required(),
       date: Joi.date(),
       frequency: Joi.string().required(),
-      amount: Joi.number().required(),
+      amount: Joi.number().less(100000).required(),
       description: Joi.string().required(),
     },
   }),
