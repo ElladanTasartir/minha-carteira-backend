@@ -1,17 +1,11 @@
 import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 
+import ICreateMovementDTO from '../dtos/ICreateMovementDTO';
 import IFinanceRepository from '../repositories/IFinanceRepository';
 import Movement from '../infra/typeorm/schemas/Movement';
 
-interface IRequest {
-  title: string;
-  type: string;
-  date: Date;
-  frequency: string;
-  amount: number;
-  description: string;
-}
+type IRequest = ICreateMovementDTO;
 
 @injectable()
 export default class MovementRegister {
