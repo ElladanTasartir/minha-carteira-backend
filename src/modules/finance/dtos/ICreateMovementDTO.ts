@@ -1,6 +1,6 @@
 export default interface ICreateMovement {
   title: string;
-  type: string;
+  type: 'income' | 'outcome';
   date: Date;
   frequency: string;
   amount: number;
