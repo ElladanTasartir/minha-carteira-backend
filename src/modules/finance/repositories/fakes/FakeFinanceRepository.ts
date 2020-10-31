@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import Movement from '@modules/finance/infra/typeorm/entities/Movement';
+import Movement from '@modules/finance/infra/typeorm/schemas/Movement';
 import ICreateMovementDTO from '@modules/finance/dtos/ICreateMovementDTO';
 import IFinanceRepository from '../IFinanceRepository';
 

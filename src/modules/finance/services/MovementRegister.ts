@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 
 import IFinanceRepository from '../repositories/IFinanceRepository';
-import Movement from '../infra/typeorm/entities/Movement';
+import Movement from '../infra/typeorm/schemas/Movement';
 
 interface IRequest {
   title: string;
