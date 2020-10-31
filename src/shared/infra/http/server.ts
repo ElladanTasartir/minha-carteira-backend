@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import express, { json, NextFunction, Request, Response } from 'express';
+import { errors } from 'celebrate';
 import 'express-async-errors';
 
 import '@shared/container';
@@ -13,6 +14,7 @@ const server = express();
 server.use(json());
 
 server.use(routes);
+server.use(errors());
 
 server.use(
   (err: Error, request: Request, response: Response, _: NextFunction) => {
