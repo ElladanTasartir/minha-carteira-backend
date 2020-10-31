@@ -6,6 +6,6 @@
   "useUnifiedTopology": true,
   "useNewUrlParser": true,
   "entities": [
-    "./src/modules/users/infra/typeorm/entities/*.ts"
+    "./src/modules/**/infra/typeorm/schemas/*.ts"
   ]
 }
