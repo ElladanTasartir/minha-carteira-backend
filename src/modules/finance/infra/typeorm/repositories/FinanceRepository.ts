@@ -2,7 +2,7 @@ import { getMongoRepository, MongoRepository } from 'typeorm';
 
 import IFinanceRepository from '@modules/finance/repositories/IFinanceRepository';
 import ICreateMovementDTO from '@modules/finance/dtos/ICreateMovementDTO';
-import Movement from '../entities/Movement';
+import Movement from '../schemas/Movement';
 
 class FinanceRepository implements IFinanceRepository {
   private ormRepository: MongoRepository<Movement>;
