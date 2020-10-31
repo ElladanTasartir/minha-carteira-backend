@@ -3,6 +3,7 @@ import FakeFinanceRepository from '../repositories/fakes/FakeFinanceRepository';
 
 let movementRegister: MovementRegister;
 let fakeFinanceRepository: FakeFinanceRepository;
+
 describe('MovementRegister', () => {
   beforeAll(() => {
     fakeFinanceRepository = new FakeFinanceRepository();
@@ -10,16 +11,14 @@ describe('MovementRegister', () => {
   });
 
   it('should be able to register new finance movement', async () => {
-    const data = {
+    const finance = await movementRegister.execute({
       title: 'Café',
       type: 'outcome',
       date: new Date(Date.now()),
       frequency: 'recurring',
       amount: 8.6,
       description: 'Compra café urgente',
-    };
-
-    const finance = await movementRegister.execute(data);
+    });
 
     expect(finance).toHaveProperty('id');
   });
