@@ -10,6 +10,7 @@ export default class MovementController {
     const movementRegister = container.resolve(MovementRegister);
 
     const movement = await movementRegister.execute({
+      user_id: request.user.id,
       title,
       type,
       date,

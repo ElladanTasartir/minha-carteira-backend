@@ -5,4 +5,5 @@ export default interface ICreateMovement {
   frequency: string;
   amount: number;
   description: string;
+  user_id: string;
 }

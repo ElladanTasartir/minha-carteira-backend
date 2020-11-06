@@ -5,7 +5,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+
+import User from '@modules/users/infra/typeorm/schemas/User';
 
 @Entity('movements')
 class Movement {
@@ -17,6 +21,10 @@ class Movement {
 
   @Column()
   type: 'income' | 'outcome';
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user_id: string;
 
   @Column('date')
   date: Date;

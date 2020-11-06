@@ -12,6 +12,7 @@ describe('MovementRegister', () => {
 
   it('should be able to register new finance movement', async () => {
     const finance = await movementRegister.execute({
+      user_id: 'user_id',
       title: 'Café',
       type: 'outcome',
       date: new Date(Date.now()),

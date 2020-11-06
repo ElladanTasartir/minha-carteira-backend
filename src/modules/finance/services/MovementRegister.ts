@@ -21,8 +21,10 @@ export default class MovementRegister {
     frequency,
     amount,
     description,
+    user_id,
   }: IRequest): Promise<Movement> {
     const movement = await this.financeRepository.create({
+      user_id,
       title,
       type,
       date,
