@@ -3,7 +3,7 @@ export default class AppError {
 
   message: string;
 
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, statusCode = 400) {
     this.statusCode = statusCode;
     this.message = message;
   }
