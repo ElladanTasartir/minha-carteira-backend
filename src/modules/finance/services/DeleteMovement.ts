@@ -20,7 +20,7 @@ export default class ShowMovement {
     const movement = await this.financeRepository.findMovementById(id);
 
     if (!movement) {
-      throw new AppError("There's mo movement with this id");
+      throw new AppError("There's mo movement with this id", 404);
     }
 
     if (movement?.user_id !== user_id) {
