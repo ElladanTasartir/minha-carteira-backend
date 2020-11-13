@@ -19,6 +19,10 @@ export default class ShowMovement {
   public async execute({ id, user_id }: IRequest): Promise<void> {
     const movement = await this.financeRepository.findMovementById(id);
 
+    if (!movement) {
+      throw new AppError("There's mo movement with this id");
+    }
+
     if (movement?.user_id !== user_id) {
       throw new AppError('You cannot delete this movement', 401);
     }
