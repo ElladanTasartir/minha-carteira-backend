@@ -3,17 +3,23 @@ import SignUpService from './SignUpService';
 import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
+let userRepository: FakeUserRepository;
+let fakeHashProvider: FakeHashProvider;
+let signUp: SignUpService;
+
 describe('SignUpService', () => {
+  beforeAll(() => {
+    userRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+    signUp = new SignUpService(userRepository, fakeHashProvider);
+  });
+
   it('should be able to create a new user', async () => {
     const data = {
       name: 'any_user',
       email: 'any@email.com',
       password: 'any_password',
     };
-
-    const userRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const signUp = new SignUpService(userRepository, fakeHashProvider);
 
     const user = await signUp.execute(data);
 
@@ -27,10 +33,6 @@ describe('SignUpService', () => {
       email: 'any@email.com',
       password: 'any_password',
     };
-
-    const userRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const signUp = new SignUpService(userRepository, fakeHashProvider);
 
     await signUp.execute(data);
     await expect(signUp.execute(data)).rejects.toBeInstanceOf(AppError);
