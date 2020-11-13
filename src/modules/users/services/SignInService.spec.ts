@@ -10,7 +10,7 @@ let fakeTokenProvider: FakeTokenProvider;
 let signIn: SignInService;
 
 describe('SignUpService', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     userRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
     fakeTokenProvider = new FakeTokenProvider();

@@ -8,7 +8,7 @@ let fakeHashProvider: FakeHashProvider;
 let signUp: SignUpService;
 
 describe('SignUpService', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     userRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
     signUp = new SignUpService(userRepository, fakeHashProvider);
