@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import AppError from '@shared/errors/AppError';
 import DeleteMovement from './DeleteMovement';
 import FakeFinanceRepository from '../repositories/fakes/FakeFinanceRepository';
@@ -49,6 +50,17 @@ describe('ShowMovement', () => {
       deleteMovement.execute({
         id: String(movement.id),
         user_id: 'other_user',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should throw AppError if movement does not exist', async () => {
+    const movementId = new ObjectId();
+
+    await expect(
+      deleteMovement.execute({
+        id: String(movementId),
+        user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
